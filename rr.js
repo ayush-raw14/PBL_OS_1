@@ -3,19 +3,24 @@ function runRR(processes, quantum) {
   if (processes.length === 0) return alert("Add some processes first.");
   if (!quantum || quantum <= 0) return alert("Time quantum must be positive.");
 
-  let queue = [...processes].map(p => ({ ...p, remaining: p.burst }));
+  let queue = [...processes].map(p => ({ ...p, remaining: p.burst, addedToQueue: false }));
   let readyQueue = [];
-  let clock = 0;
   window.clock = 0;
   let results = [];
   let currentProcess = null;
   let timeSlice = 0;
-  let i = 0;
+
+  const processColorMap = {};
+  processes.forEach((p, index) => {
+    processColorMap[p.pid] = window.COLORS[index % window.COLORS.length];
+  });
 
   window.interval = setInterval(() => {
-    // Add newly arrived processes to ready queue
     queue.forEach(p => {
-      if (p.arrival === window.clock) readyQueue.push(p);
+      if (p.arrival === window.clock && !p.addedToQueue) {
+        readyQueue.push(p);
+        p.addedToQueue = true;
+      }
     });
 
     if (!currentProcess && readyQueue.length > 0) {
@@ -25,7 +30,7 @@ function runRR(processes, quantum) {
     }
 
     if (currentProcess) {
-      window.appendGanttBlock(currentProcess.pid, window.COLORS[results.length % window.COLORS.length], `Time ${window.clock}: ${currentProcess.pid}`);
+      window.appendGanttBlock(currentProcess.pid, processColorMap[currentProcess.pid], `Time ${window.clock}: ${currentProcess.pid}`);
       currentProcess.remaining--;
       timeSlice++;
 
