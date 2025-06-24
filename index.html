@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Process Scheduling Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    
+  <div class="container">
+    <h1>Process Scheduling Simulator</h1>
+
+    <form id="inputForm" onsubmit="addProcess(event)" class="input-section">
+      <select id="algorithm" onchange="togglePriorityInput()" required>
+        <option value="fcfs">FCFS</option>
+        <option value="sjf">SJF</option>
+        <option value="srtf">SRTF</option>
+        <option value="rr">Round Robin</option>
+        <option value="priority">Priority Scheduling</option>
+      </select>
+
+      <input type="text" id="pid" placeholder="Process ID (e.g. P1)" required />
+      <input type="number" id="arrivalTime" placeholder="Arrival Time" required />
+      <input type="number" id="burstTime" placeholder="Burst Time" required />
+
+      <input
+        type="number"
+        id="priority"
+        placeholder="Priority"
+        min="1"
+        style="display: none;"
+      />
+      <input
+      type="number"
+      id="timeQuantum"
+      placeholder="Time Quantum"
+      min="1"
+      style="display: none;"
+      />
+
+      <button type="submit">Add Process</button>
+    </form>
+
+    <div class="input-section">
+        <button type="button" onclick="runSelectedAlgorithm()">Run</button>
+        <button type="button" onclick="resetSimulator()">Reset</button>
+    </div>
+
+    <h2>Process List</h2>
+    <table id="processTable">
+      <tr><th>PID</th><th>Arrival</th><th>Burst</th></tr>
+    </table>
+
+    <h2>Gantt Chart</h2>
+    <div id="ganttWrapper">
+      <div id="ganttChart"></div>
+      <div id="timeLabels"></div>
+    </div>
+
+    <h2>Results</h2>
+    <table id="resultTable">
+      <tr><th>PID</th><th>Completion</th><th>Turnaround</th><th>Waiting</th></tr>
+    </table>
+    <div id="averages"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script><!--GSAP CDN-->
+    
+    <!-- Algorithm Scripts -->
+    <script src="fcfs.js"></script>
+    <script src="sjf.js"></script>
+    <script src="srtf.js"></script>
+    <script src="rr.js"></script>
+    <script src="priority.js"></script>
+    <script src="scheduler.js"></script>
+    
+    <!-- gsap-->
+    <script src="script.js"></script>
+  </div>
+</body>
+</html>
