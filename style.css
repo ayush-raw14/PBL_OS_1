@@ -169,7 +169,7 @@ tr:last-child td {
     border-bottom: none;
 }
 
-/* Optimized Gantt Chart Container */
+
 #ganttWrapper {
     background: white;
     border-radius: 15px;
@@ -193,7 +193,7 @@ tr:last-child td {
     padding-bottom: 8px;
 }
 
-/* Optimized Gantt Chart */
+
 #ganttChart {
     display: flex;
     align-items: center;
@@ -206,7 +206,7 @@ tr:last-child td {
     padding: 8px;
 }
 
-/* Optimized Process Block Sizing */
+
 .gantt-block {
     display: flex;
     align-items: center;
@@ -238,7 +238,7 @@ tr:last-child td {
     border-right: none;
 }
 
-/* Process colors */
+
 .gantt-block:nth-child(1) {
     background: linear-gradient(135deg, #3498db, #2980b9);
 }
@@ -279,7 +279,7 @@ tr:last-child td {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
-/* Optimized Time Labels */
+
 #timeLabels {
     display: flex;
     font-size: 11px;
@@ -308,7 +308,7 @@ tr:last-child td {
     transform: translateY(-1px);
 }
 
-/* Results section */
+
 #averages {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     padding: 20px;
@@ -330,7 +330,7 @@ tr:last-child td {
     font-weight: 500;
 }
 
-/* Enhanced Responsive Design */
+
 @media (max-width: 768px) {
     .container {
         margin: 10px;
