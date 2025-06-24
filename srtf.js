@@ -4,16 +4,18 @@ function runSRTF(processes) {
 
   let queue = [...processes].map(p => ({ ...p, remaining: p.burst }));
   let completed = [];
-  let clock = 0;
   window.clock = 0;
   let currentProcess = null;
 
+  const processColorMap = {};
+  processes.forEach((p, index) => {
+    processColorMap[p.pid] = window.COLORS[index % window.COLORS.length];
+  });
+
   window.interval = setInterval(() => {
-    // Get available processes
     let available = queue.filter(p => p.arrival <= window.clock && p.remaining > 0);
     if (available.length > 0) {
-      // Pick process with smallest remaining time
-      available.sort((a, b) => a.remaining - b.remaining);
+      available.sort((a, b) => a.remaining - b.remaining || a.arrival - b.arrival);
       let nextProc = available[0];
       if (!currentProcess || currentProcess.pid !== nextProc.pid) {
         currentProcess = nextProc;
@@ -24,7 +26,7 @@ function runSRTF(processes) {
     }
 
     if (currentProcess) {
-      window.appendGanttBlock(currentProcess.pid, window.COLORS[completed.length % window.COLORS.length], `Time ${window.clock}: ${currentProcess.pid}`);
+      window.appendGanttBlock(currentProcess.pid, processColorMap[currentProcess.pid], `Time ${window.clock}: ${currentProcess.pid} (Remaining: ${currentProcess.remaining})`);
       currentProcess.remaining--;
       if (currentProcess.remaining === 0) {
         currentProcess.completion = window.clock + 1;
